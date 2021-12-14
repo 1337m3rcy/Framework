@@ -36,7 +36,8 @@ class RealCalculator {
     get (a) {
         return (a instanceof Matrix) ? new MatrixCalculator 
         : (a instanceof Vector) ? new VectorCalculator 
-        : (a instanceof Complex) ? new ComplexCalculator : new RealCalculator;
+        : (a instanceof Complex) ? new ComplexCalculator 
+        : (a instanceof Polynomial) ? new PolynomialCalculator : new RealCalculator;
     }
 
     type(calc, elem, method) {

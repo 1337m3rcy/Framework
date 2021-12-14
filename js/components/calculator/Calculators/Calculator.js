@@ -3,7 +3,8 @@ class Calculator extends RealCalculator {
 	readString(a) {
 		return this.toMatrix(a) ||
 			this.toVector(a) ||
-			this.toComplex(a) || a - 0;
+			this.toComplex(a) || 
+			this.toPolynomial(a) || a - 0;
 	}
 
 	toComplex(str) {
@@ -54,6 +55,20 @@ class Calculator extends RealCalculator {
 			return null;
 		}
 	}
+
+	toPolinomial(str) {
+		if (str instanceof Array) {
+			return new Polynomial(str);
+		}
+		if (typeof str == 'string' && str) {
+			const arr = str.replace(' ', '');
+			if (arr.length >= 2) {
+				return new Polynomial(arr.map(el => this.readString(el)));
+			}
+			return null;
+		}
+	}
+
 	complex(re, im) {
 		return new Complex(re, im);
 	}
@@ -64,6 +79,10 @@ class Calculator extends RealCalculator {
 
 	matrix(values) {
 		return new Matrix(values);
+	}
+
+	polinom(values) {
+		return new Polynomial(values);
 	}
 
 	add(a, b) {
