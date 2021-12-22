@@ -118,6 +118,7 @@ class Calculator extends RealCalculator {
 			case 'Complex': return (new ComplexCalculator).one();
 			case 'Vector': return (new VectorCalculator).one(elem.values.length, elem[0]);
 			case 'Matrix': return (new MatrixCalculator).one(elem.values.length, elem[0][0]);
+			case 'Polynomial': return (new PolynomialCalculator).one(elem.values.length, elem[0]);
 		}
 		return super.one();
 	}
@@ -129,6 +130,7 @@ class Calculator extends RealCalculator {
 			case 'Complex': return (new ComplexCalculator).zero();
 			case 'Vector': return (new VectorCalculator).zero(elem.values.length, elem[0]);
 			case 'Matrix': return (new MatrixCalculator).zero(elem.values.length, elem[0][0]);
+			case 'Polynomial': return (new PolynomialCalculator).zero(elem.values.length, elem[0]);
 		}
 		return super.zero();
 	}

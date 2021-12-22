@@ -1,10 +1,3 @@
-class Member {
-	constructor(value = 0, power = 0) {
-		this.value = value;
-		this.power = power;
-	}
-}
-
 class Polynomial {
 	constructor(poly = []) {
 		this.poly = poly;
@@ -14,6 +7,12 @@ class Polynomial {
 		return this.poly.reduce((S, elem) => 
 			calc.add(S, calc.prod(calc.pow(x, elem.power), elem.value)), calc.zero(null, x)
 			);
-	} 
+		} 
+	}
+
+	toString() {
+		if (el > 0) {
+			return this.values.map(el => el.toString().join('+'));
+		} else
 	}
 }
