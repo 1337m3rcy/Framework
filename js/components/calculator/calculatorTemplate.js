@@ -16,4 +16,7 @@ Template.prototype.calculatorTemplate = () => `
         <button class='btn btn-three operand' data-operand='prod'>*p</button>
         <button class='btn btn-three operand' data-operand='pow'>^n</button>
     </div>
+    <div>
+        <button class='btn btn-three operand' data-operand='value'>Посчитать</button>
+    </div>
 `;
