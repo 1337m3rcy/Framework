@@ -20,10 +20,13 @@ class CalculatorComponent extends Component {
     calculate(operand) {
         let a = this.calc.readString(document.getElementById('a').value);
         let b = this.calc.readString(document.getElementById('b').value);
+        console.log(a);
+        console.log(b);
         if (a && b) {
             let c;
             if (operand == 'value' && a instanceof Polynomial){
                 c = a.getValue(b);
+                this.callbacks.polynomial(a);
             } else if (operand == 'prod' || operand == 'pow') {
                 if ((b instanceof Complex) && (b.im == 0))  {
                     c = this.calc[operand](a, b.re);
@@ -34,6 +37,9 @@ class CalculatorComponent extends Component {
                 c = this.calc[operand](a, b);
             }
             document.getElementById('c').value = c.toString();
+            if (c instanceof Polynomial) {
+                this.callbacks.polynomial(c);
+            }
         }
     }
 }

@@ -20,7 +20,6 @@ class Graph2DComponent extends Component {
                 move: (event) => this.move(event),
                 down: () => this.down(),
                 up: () => this.up()
-                
             }
         });
 
@@ -32,7 +31,25 @@ class Graph2DComponent extends Component {
             }
         });
 
+        
         this.render();
+    }
+
+    polynomial = new Polynomial;
+
+    printPolynomial(p) {
+        var x = this.WIN.LEFT;
+        var dx = this.WIN.WIDTH / 200;
+        var y = p.getValue(x);
+        var dy = p.getValue(x + dx);
+        while (x < this.WIN.LEFT + this.WIN.WIDTH) {
+            if (Math.abs(y - dy) <= this.WIN.HEIGHT) {
+                this.canvas.line(x, y, x + dx, dy);
+            }
+            y = p.getValue(x);
+            dy = p.getValue(x + dx);
+            x += dx;
+        }
     }
 
     addFunction(f, a, b, num) {
@@ -120,6 +137,7 @@ class Graph2DComponent extends Component {
         }
     }
 
+
     getDerivative(f, x0, dx = 0.00001) {
         return (f(x0 + dx) - f(x0)) / dx;
     }
@@ -160,9 +178,11 @@ class Graph2DComponent extends Component {
         )
     }
 
+
     render() {
         this.canvas.clear();
         this.printOXY();
+        this.printPolynomial(this.polynomial);
         for (let i = 0; i < this.funcs.length; i++) {
             if (this.funcs[i]) {
                 if (this.funcs[i].a < this.funcs[i].b) {

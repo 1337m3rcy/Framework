@@ -1,25 +1,4 @@
 class ComplexCalculator extends RealCalculator {
-    /*toComplex(str) {
-        if (typeof str == 'number') {
-            return new Complex(str);
-        }
-        if (typeof str == 'string' && str) {
-            const arr = str.split('i*');
-            if (arr.length == 2) {
-                if (arr[0].slice(-1) == '-') {
-                    arr[1] = '-' + arr[1];
-                }
-                return new Complex(
-                    arr[0].substring(0, arr[0].length - 1)-0, 
-                    arr[1]-0
-                );
-            }
-            if (arr.length == 1) {
-                return new Complex(arr[0] - 0);
-            }
-        }
-        return null;
-    }*/
 
     add(a, b) {
         return new Complex(a.re + b.re, a.im + b.im);

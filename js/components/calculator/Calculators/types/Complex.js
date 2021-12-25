@@ -1,12 +1,12 @@
 class Complex {
-    constructor(re = 0,im = 0){
-        this.re = re;
-        this.im = im;
+    constructor(re=0,im=0){
+        this.re=re;
+        this.im=im;
     }
 
     toString(){
         if (this.im){
-                if (this.im > 0) {
+                if (this.im>0) {
                     return `${this.re}+i*${this.im}`;
                 } else {
                     return `${this.re}-i*${-this.im}`;

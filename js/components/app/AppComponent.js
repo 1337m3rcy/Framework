@@ -13,7 +13,11 @@ class AppComponent extends Component {
             id: 'calculator',
             parent: this.id,
             template: template.calculatorTemplate,
-            className: 'hide'
+            className: 'hide',
+            callbacks: {
+                polynomial: 
+                    (p) => this.graph2D.polynomial = p
+            }
         });
         this.graph2D = new Graph2DComponent({
             id: 'graph2D',

@@ -32,10 +32,8 @@ class Calculator extends RealCalculator{
     toMember(str) {
         if (typeof str == 'string' && str && str.includes('x')) {
             const arr = str.split('*x^');
-            if (arr.length == 2) {
-                if (arr[0].slice(-1) == '-') {
-                    arr[1] = '-' + arr[1];
-                }
+            if (arr.length == 2) { 
+                arr[0].replace('+','');
                 return new Member(
                     arr[0]-0, 
                     arr[1]-0
@@ -47,7 +45,8 @@ class Calculator extends RealCalculator{
 
     toPolynomial(str) {
         if (typeof str == 'string' && str && str.includes('x')) {
-			const arr = str.replace('-', '+-').split('+');
+            str = '|'+str;
+			const arr = str.replaceAll('+', '/+').replaceAll('-', '/-').replace('|/','').replace('|','').split('/');
 			return new Polynomial(arr.map(el => this.toMember(el)))
 		}
         return null;
@@ -118,22 +117,20 @@ class Calculator extends RealCalculator{
 
     one(type,elem){
         type=(type)?type:(elem)?elem.constructor.name:null;
-        console.log(type);
         switch (type){
             case 'Complex': return (new ComplexCalculator).one();
-            case 'Vector': return (new VectorCalculator).one(elem.values.length,elem[0]);
-            case 'Matrix': return (new MatrixCalculator).one(elem.values.length,elem[0][0]);
+            case 'Vector': return (new VectorCalculator).one(elem.values.length,elem.values[0]);
+            case 'Matrix': return (new MatrixCalculator).one(elem.values.length,elem.values[0][0]);
         } return super.one();
     }
 
     zero(type, elem) {
 		type = (type) ? type : (elem)
 			? elem.constructor.name : null;
-            console.log(type);
 		switch (type) {
 			case 'Complex': return (new ComplexCalculator).zero();
-			case 'Vector': return (new VectorCalculator).zero(elem.values.length, elem[0]);
-			case 'Matrix': return (new MatrixCalculator).zero(elem.values.length, elem[0][0]);
+			case 'Vector': return (new VectorCalculator).zero(elem.values.length, elem.values[0]);
+			case 'Matrix': return (new MatrixCalculator).zero(elem.values.length, elem.values[0][0]);
 		}
 		return super.zero();
 	}

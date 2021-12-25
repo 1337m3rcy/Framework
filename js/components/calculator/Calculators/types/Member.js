@@ -8,4 +8,11 @@ class Member {
         if (this.value!=0) {return this.value+'*x^'+this.power}
         return '0';
     }
-}   
+
+    toMath() {
+        if (this.value === 0) {
+            return '';
+        }
+        return `${this.value}*Math.pow(x,${this.power})`;
+    }
+}

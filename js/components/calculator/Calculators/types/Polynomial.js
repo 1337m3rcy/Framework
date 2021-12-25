@@ -1,33 +1,23 @@
-class Polynomial {
-    constructor(poly = []) {
+class Polynomial{
+    constructor(poly=[]){
         this.poly = poly;
-        this.poly.sort((a, b) => b.power - a.power);
+        this.poly.sort((a,b)=>b.power-a.power);
     }
 
-    getValue(x) {
+    getValue(x){
         const calc = new Calculator;
-        return this.poly.reduce((s, elem) =>
-            calc.add(
-                s,
-                calc.prod(calc.pow(x, elem.power), elem.value)
-            ),
-            calc.zero(null, x)
-        );
+        const type = (x instanceof Complex) ? 'Complex': 
+            (x instanceof Matrix) ? 'Matrix':
+            (x instanceof Vector) ? 'Vector' : null;
+        return this.poly.reduce((S, elem)=>
+        calc.add(S,calc.prod(calc.pow(x,elem.power),elem.value)),calc.zero(type,x))
     }
 
-    toStr(key) {
-        return this.poly.map(
-            (el, i) => el.value > 0 ? 
-                `${i == 0 ? '' : '+'}${el[key]()}` : 
-                el[key]()
-        ).join('');
-    }
-
-    toString() {
-        return this.toStr('toString');
+        toString() {
+        return this.poly.map(el => el.toString()).join("+").replaceAll('+0','').replaceAll('+-','-');
     }
 
     toMath() {
-        return this.toStr('toMath');
+        return this.poly.map(el => el.toMath()).join("+").replaceAll('+0','').replaceAll('+-','-');
     }
 }

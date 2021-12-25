@@ -7,5 +7,5 @@ class Vector {
     toString() {
         return "(" + this.values.map(el => el.toString()).join(" ") + ")";
     }
-}
 
+}

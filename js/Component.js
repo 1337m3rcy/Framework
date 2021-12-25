@@ -33,6 +33,7 @@ class Component {
         } else {
             document.querySelector('body').appendChild(elem);
         }
-    } 
+    }
+    
     _addEventListeners() { }
 }
