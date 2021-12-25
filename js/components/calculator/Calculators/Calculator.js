@@ -33,7 +33,9 @@ class Calculator extends RealCalculator{
         if (typeof str == 'string' && str && str.includes('x')) {
             const arr = str.split('*x^');
             if (arr.length == 2) { 
-                arr[0].replace('+','');
+                if (arr[0].slice(-1) == '-') {
+                	arr[1] = '-' + arr[1];
+                }
                 return new Member(
                     arr[0]-0, 
                     arr[1]-0
@@ -45,7 +47,7 @@ class Calculator extends RealCalculator{
 
     toPolynomial(str) {
         if (typeof str == 'string' && str && str.includes('x')) {
-            str = '|'+str;
+            str = '|'+ str;
 			const arr = str.replaceAll('+', '/+').replaceAll('-', '/-').replace('|/','').replace('|','').split('/');
 			return new Polynomial(arr.map(el => this.toMember(el)))
 		}
