@@ -57,7 +57,7 @@ class Graph2DComponent extends Component {
             f,
             a: a - 0,
             b: b - 0,
-            color: 'red',
+            color: 'purple',
             width: 2
         }
         this.render();
@@ -174,7 +174,7 @@ class Graph2DComponent extends Component {
         this.canvas.line(
             x1, k * x1 + b,
             x2, k * x2 + b,
-            "#0f0", 1, "true"
+            "purple", 1, "true"
         )
     }
 

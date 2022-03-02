@@ -37,7 +37,7 @@ class Canvas {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    line(x1, y1, x2, y2, color = '#f00', width = 2, isDash) {
+    line(x1, y1, x2, y2, color = 'purple', width = 2, isDash) {
         this.context.beginPath();
         this.context.strokeStyle = color;
         this.context.lineWidth = width;
@@ -51,7 +51,7 @@ class Canvas {
         this.context.stroke();
     }
 
-    point(x, y, color = '#00f', size = 2) {
+    point(x, y, color = 'purple', size = 2) {
         this.context.beginPath();
         this.context.strokeStyle = color;
         this.context.fillStyle = color;
