@@ -1,3 +1,1 @@
-function Figure() {
-	
-}
+function Figure() { }

@@ -13,8 +13,11 @@ class Polygon {
                 r: parseInt(result[1], 16),
                 g: parseInt(result[2], 16),
                 b: parseInt(result[3], 16)
-            } :
-            { r: 0, g: 0, b: 0 }
+            } : { 
+            r: 0,
+            g: 0,
+            b: 0 
+        };
     }
 
     rgbToHex(r, g, b) {

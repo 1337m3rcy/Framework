@@ -11,85 +11,97 @@ class Graph3D {
         return point.y * (this.WIN.CAMERA.z - this.WIN.DISPLAY.z) / (this.WIN.CAMERA.z - point.z);
     }
 
-    multMatrix(A, B) {
-        const C = [[0, 0, 0, 0],
-                   [0, 0, 0, 0],
-                   [0, 0, 0, 0],
-                   [0, 0, 0, 0]]
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                let s = 0;
-                for (let k = 0; k < 4; k++) {
-                    s +=A[i][k]*B[k][j];
-                }
-                C[i][j] = s;
+    //перемножение матриц
+    multMatrix(T, m) {
+        const a = [0, 0, 0, 0];
+        for (let i = 0; i < T.length; i++) {
+            let b = 0;
+            for (let j = 0; j < m.length; j++) {
+                b += T[j][i] * m[j];
             }
+            a[i] = b;
         }
-            return C;
+        return a;
     }
 
-    one(){
-        return [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
-    }
-
-    calcPoint(M, point) {
-        let array = [0, 0, 0, 0];
-        let m = [point.x, point.y, point.z, 1]
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                array[i] += M[i][j] * m[j];
-            }
-        }
+    //зум
+    zoom(delta, point) {
+        const array = this.multMatrix(
+            [
+                [delta, 0, 0, 0],
+                [0, delta, 0, 0],
+                [0, 0, delta, 0],
+                [0, 0, 0, 1]
+            ], [point.x, point.y, point.z, 1]
+        );
         point.x = array[0];
         point.y = array[1];
         point.z = array[2];
     }
 
-    zoom(delta) {
-        return [
-            [delta, 0, 0, 0],
-            [0, delta, 0, 0],
-            [0, 0, delta, 0],
-            [0, 0, 0, 1]]
+    //перенос
+    move(dx, dy, dz, point) {
+        const array = this.multMatrix(
+            [
+                [1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [dx, dy, dz, 1]
+            ], [point.x, point.y, point.z, 1]
+        );
+        point.x = array[0];
+        point.y = array[1];
+        point.z = array[2];
     }
 
-    move(dx, dy, dz) {
-        return [
-            [1, 0, 0, dx],
-            [0, 1, 0, dy],
-            [0, 0, 1, dz],
-            [0, 0, 0, 1]]
+    //вращения
+    rotateOx(alpha, point) {
+        const array = this.multMatrix(
+            [
+                [1, 0, 0, 0],
+                [0, Math.cos(alpha), Math.sin(alpha), 0],
+                [0, -Math.sin(alpha), Math.cos(alpha), 0],
+                [0, 0, 0, 1]
+            ], [point.x, point.y, point.z, 1]
+        );
+        point.x = array[0];
+        point.y = array[1];
+        point.z = array[2];
+    }
+    rotateOy(alpha, point) {
+        const array = this.multMatrix(
+            [
+                [Math.cos(alpha), 0, -Math.sin(alpha), 0],
+                [0, 1, 0, 0],
+                [Math.sin(alpha), 0, Math.cos(alpha), 0],
+                [0, 0, 0, 1]
+            ], [point.x, point.y, point.z, 1]
+        );
+        point.x = array[0];
+        point.y = array[1];
+        point.z = array[2];
+    }
+    rotateOz(alpha, point) {
+        const array = this.multMatrix(
+            [
+                [Math.cos(alpha), Math.sin(alpha), 0, 0],
+                [-Math.sin(alpha), Math.cos(alpha), 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]
+            ], [point.x, point.y, point.z, 1]
+        );
+        point.x = array[0];
+        point.y = array[1];
+        point.z = array[2];
     }
 
-    rotateOy(alpha) {
-        return [
-            [1, 0, 0, 0],
-            [0, Math.cos(alpha), Math.sin(alpha), 0],
-            [0, -Math.sin(alpha), Math.cos(alpha), 0],
-            [0, 0, 0, 1]]
-    }
-
-    rotateOx(alpha) {
-        return [
-            [Math.cos(alpha), 0, -Math.sin(alpha), 0],
-            [0, 1, 0, 0],
-            [Math.sin(alpha), 0, Math.cos(alpha), 0],
-            [0, 0, 0, 1]]
-    }
-
-    rotateOz(alpha) {
-        return [
-            [Math.cos(alpha), Math.sin(alpha), 0, 0],
-            [-Math.sin(alpha), Math.cos(alpha), 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1]]
-
-    }
-
+    //полигоны
     calcDistance(figure, endPoint, name) {
         figure.polygons.forEach(polygon => {
             const points = polygon.points;
-            let x = 0, y = 0, z = 0;
+            let x = 0,
+                y = 0,
+                z = 0;
             for (let i = 0; i < points.length; i++) {
                 x += figure.points[points[i]].x;
                 y += figure.points[points[i]].y;
@@ -98,28 +110,21 @@ class Graph3D {
             x /= points.length;
             y /= points.length;
             z /= points.length;
-            polygon[name] = Math.sqrt(Math.pow(endPoint.x - x, 2)
-                + Math.pow(endPoint.y - y, 2)
-                + Math.pow(endPoint.z - z, 2))
+            polygon[name] = Math.sqrt(
+                Math.pow(endPoint.x - x, 2) +
+                Math.pow(endPoint.y - y, 2) +
+                Math.pow(endPoint.z - z, 2));
         });
     }
 
+    //сортировка
+    sortByArtistAlgoritm(polygons) {
+        polygons.sort((a, b) => b.distance - a.distance);
+    }
+
+    //подсветка и тени
     calcIllumination(distance, lumen) {
-        const res = (distance) ? lumen / Math.pow(distance, 3) : 1;
-        return (res > 1) ? 1 : res;
+        const res = distance ? lumen / Math.pow(distance, 3) : 1;
+        return res > 1 ? 1 : res;
     }
-
-    sortByArtist(polygons) {
-        polygons.sort((a, b) =>
-            (b.distance - a.distance));
-    }
-
-    moveTo(point, endPoint){
-        return [
-            [1, 0, 0, point.x-endPoint.x],
-            [0, 1, 0, point.y-endPoint.y],
-            [0, 0, 1, point.z-endPoint.z],
-            [0, 0, 0, 1]]
-    }
-
 }

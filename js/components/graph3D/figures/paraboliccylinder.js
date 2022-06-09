@@ -1,16 +1,16 @@
-Figure.prototype.ellipsoid = (count = 20, a = 18, b = 14, c = 10) => {
+Figure.prototype.paraboliccylinder = (count = 10, a = 5, b = 2) => {
     const points = [];
     const edges = [];
     const polygons = [];
 
     //точки
-    const dt = Math.PI * 2 / count;
-    for (let i = 0; i <= 2 * Math.PI; i += dt) {
-        for (let j = 0; j < 2 * Math.PI; j += dt) {
+    const dt = 2 * Math.PI / count;
+    for (let i = -Math.PI; i <= Math.PI; i += dt) {
+        for (let j = -Math.PI; j < Math.PI; j += dt) {
             points.push(new Point(
-                a * Math.sin(i) * Math.cos(j),
-                b * Math.sin(i) * Math.sin(j),
-                c * Math.cos(i)
+                b * Math.sinh(i),
+                j * 2,
+                a * Math.cosh(i)
             ));
         }
     }

@@ -1,14 +1,40 @@
 Template.prototype.graph3DTemplate = () => `
-<div>
-<input type="checkbox" checked=true id="isPolygons">Грани</input>
-<input type="checkbox" id="isEdges">Ребра</input>
-<input type="checkbox" id="isPoints">Вершины</input>
-<br>
-<br>
-<input type="checkbox" id="isDynLigth">Освещение</input><br>
-<br>
-<br>
-<input type="checkbox" id="isAnimation">Анимация</input><br>
-<canvas id="canvas3D"></canvas>
-</div>
+    <canvas id="canvas3D"></canvas>
+    <div class="settengs">
+        <div>
+            <label class="text">
+                <input class="check" type="checkbox" checked=true id="isPolygons"><label></input>
+            &nbsp;Полигоны</label>
+            <label class="text">
+                <input class="check" type="checkbox" id="isEdges"></input>
+            &nbsp;Ребра</label>
+            <label class="text">
+                <input class="check" type="checkbox" id="isPoints"></input>
+            &nbsp;Вершины</label>
+        </div>
+        <div>
+            <select id="selectFigure" class="btn btn-animated figures">
+                <option value="empty">выбор фигуры</option>
+                <option value="cube">Куб</option>
+                <option value="sphera">Сфера</option>
+                <option value="cone">Конус</option>
+                <option value="cylinder">Цилиндр</option>
+                <option value="ring">Тор</option>
+                <option value="ellipsoid">Эллипсоид</option>
+                <option value="onesheetedhyperboloid">Однополостной гиперболоид</option>
+                <option value="twosheetedhyperboloid">Двуполостной гиперболоид</option>
+                <option value="ellipticalparaboloid">Эллиптический параболоид</option>
+                <option value="ellipticalcylinder">Эллиптический цилиндр</option>
+                <option value="paraboliccylinder">Параболический цилиндр</option>
+                <option value="hyperbolicparaboloid">Гиперболический параболоид</option>
+                <option value="hyperboliccylinder">Гиперболический цилиндр</option>
+            </select>
+        </div>
+        <div>
+            <input type="color" id="color" placeholder="color" class="btn btn-animated color" value="#11B2F7">
+        </div>
+        <div>
+            <input class="btn btn-animated show-page light" type="range" min="25000" max="50000" value="powerlight" id="powerlight">
+        </div>
+    </div>
 `;

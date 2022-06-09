@@ -1,18 +1,22 @@
-Figure.prototype.ellipsoid = (count = 20, a = 18, b = 14, c = 10) => {
+Figure.prototype.cylinder = (R = 15, count = 10, k = 6) => {
     const points = [];
     const edges = [];
     const polygons = [];
 
     //точки
     const dt = Math.PI * 2 / count;
-    for (let i = 0; i <= 2 * Math.PI; i += dt) {
-        for (let j = 0; j < 2 * Math.PI; j += dt) {
+    let t = 0;
+    while (k > 0) {
+        while (t < Math.PI * 2) {
             points.push(new Point(
-                a * Math.sin(i) * Math.cos(j),
-                b * Math.sin(i) * Math.sin(j),
-                c * Math.cos(i)
+                R * Math.cos(t),
+                R * Math.sin(t),
+                -10 * k
             ));
+            t += dt;
         }
+        k--;
+        t = 0;
     }
 
     //ребра

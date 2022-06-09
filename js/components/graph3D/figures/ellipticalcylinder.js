@@ -1,17 +1,19 @@
-Figure.prototype.ellipsoid = (count = 20, a = 18, b = 14, c = 10) => {
+Figure.prototype.ellipticalcylinder = (count = 20, h = 15, a = 6, b = 10) => {
     const points = [];
     const edges = [];
     const polygons = [];
 
     //точки
-    const dt = Math.PI * 2 / count;
-    for (let i = 0; i <= 2 * Math.PI; i += dt) {
-        for (let j = 0; j < 2 * Math.PI; j += dt) {
-            points.push(new Point(
-                a * Math.sin(i) * Math.cos(j),
-                b * Math.sin(i) * Math.sin(j),
-                c * Math.cos(i)
-            ));
+    const dt = 2 * Math.PI / count;
+    for (let p = 0; p < h; p = p + 2) {
+        for (let i = 0; i <= Math.PI; i += 2 * dt + count) {
+            for (let j = 0; j < 2 * Math.PI; j += dt) {
+                points.push(new Point(
+                    a * Math.cos(i) * Math.cos(j),
+                    p,
+                    b * Math.sin(j)
+                ));
+            }
         }
     }
 

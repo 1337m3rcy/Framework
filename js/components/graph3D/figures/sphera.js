@@ -1,21 +1,21 @@
-Figure.prototype.ellipsoid = (count = 20, a = 18, b = 14, c = 10) => {
+Figure.prototype.sphera = (R = 15, count = 20) => {
     const points = [];
     const edges = [];
     const polygons = [];
 
     //точки
     const dt = Math.PI * 2 / count;
-    for (let i = 0; i <= 2 * Math.PI; i += dt) {
-        for (let j = 0; j < 2 * Math.PI; j += dt) {
+    for (let i = 0; i <= Math.PI; i += dt) {
+        for (let j = 0; j < Math.PI * 2; j += dt) {
             points.push(new Point(
-                a * Math.sin(i) * Math.cos(j),
-                b * Math.sin(i) * Math.sin(j),
-                c * Math.cos(i)
+                R * Math.cos(j) * Math.sin(i),
+                R * Math.cos(i),
+                R * Math.sin(j) * Math.sin(i),
             ));
         }
     }
 
-    //ребра
+    //ребра 
     for (let i = 0; i < points.length; i++) {
         //вдоль
         if (i + 1 < points.length && (i + 1) % count !== 0) {
