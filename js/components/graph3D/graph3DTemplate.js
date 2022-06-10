@@ -13,7 +13,7 @@ Template.prototype.graph3DTemplate = () => `
             &nbsp;Вершины</label>
         </div>
         <div>
-            <select id="selectFigure" class="btn btn-animated figures">
+            <select id="selectFigure" class="figures">
                 <option value="empty">выбор фигуры</option>
                 <option value="cube">Куб</option>
                 <option value="sphera">Сфера</option>
@@ -31,10 +31,10 @@ Template.prototype.graph3DTemplate = () => `
             </select>
         </div>
         <div>
-            <input type="color" id="color" placeholder="color" class="btn btn-animated color" value="#11B2F7">
+            <input type="color" id="color" placeholder="color" class="color" value="#11B2F7">
         </div>
         <div>
-            <input class="btn btn-animated show-page light" type="range" min="25000" max="50000" value="powerlight" id="powerlight">
+            <input class="light" type="range" min="25000" max="50000" value="powerlight" id="powerlight">
         </div>
     </div>
 `;
